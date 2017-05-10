@@ -2,7 +2,7 @@
     © 2017 Savoir-faire Linux <https://savoirfairelinux.com>
     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL.html).
 */
-odoo.define('project_invoicing.widget', function (require) {
+odoo.define('project_invoicing.project_widget', function (require) {
 "use strict";
 
 var common = require('web.form_common');
@@ -17,6 +17,7 @@ var utils = require('web.utils');
 var ListView = require('web.ListView');
 var session = require('web.session');
 var CrashManager = require('web.CrashManager');
+var One2ManyListView = require('One2ManyListView');
 
 var QWeb = core.qweb;
 var _t = core._t;
@@ -512,10 +513,9 @@ var InvoicePrepare = common.FormWidget.extend({
         var real = this.get_task_el(task, '.checkbox-real').prop('checked');
         var lines = this.get_selected_lines(task);
         var fields = this.task_fields[task.id];
-        res = {
+        var res = {
             id: task.id,
             mode: real ? 'real' : 'lump_sum',
-            description: fields.description.get_value(),
             lines: lines,
         }
         if(res.mode === 'lump_sum'){
@@ -558,4 +558,3 @@ return {
 };
 
 });
-
