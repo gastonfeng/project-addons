@@ -2,7 +2,7 @@
 <odoo>
     <record id="action_task_category_type" model="ir.actions.act_window">
         <field name="name">Task Category</field>
-        <field name="res_model">task.category.type</field>
+        <field name="res_model">task.category</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -14,7 +14,7 @@
 
     <record id="task_category_form" model="ir.ui.view">
         <field name="name">Category Form</field>
-        <field name="model">task.category.type</field>
+        <field name="model">task.category</field>
         <field name="arch" type="xml">
             <form string="Task Category Type">
                 <sheet>
@@ -28,7 +28,7 @@
     </record>
     <record id="task_category_tree" model="ir.ui.view">
         <field name="name">Category Tree</field>
-        <field name="model">task.category.type</field>
+        <field name="model">task.category</field>
         <field name="arch" type="xml">
             <tree string="Task Category Type">
                 <field name="name"/>

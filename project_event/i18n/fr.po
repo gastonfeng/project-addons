@@ -40,7 +40,7 @@ msgid "Activity Categories"
 msgstr "Catégories d'activité"
 
 #. module: project_event
-#: model:ir.actions.act_window,name:project_event.action_activity_category_type
+#: model:ir.actions.act_window,name:project_event.action_activity_category
 msgid "Activity Category"
 msgstr "Catégorie d'activité"
 
@@ -78,13 +78,13 @@ msgid "Configuration"
 msgstr "Configuration"
 
 #. module: project_event
-#: model:ir.model.fields,field_description:project_event.field_activity_category_type_create_uid
+#: model:ir.model.fields,field_description:project_event.field_activity_category_create_uid
 #: model:ir.model.fields,field_description:project_event.field_task_category_type_create_uid
 msgid "Created by"
 msgstr "Créé par"
 
 #. module: project_event
-#: model:ir.model.fields,field_description:project_event.field_activity_category_type_create_date
+#: model:ir.model.fields,field_description:project_event.field_activity_category_create_date
 #: model:ir.model.fields,field_description:project_event.field_task_category_type_create_date
 msgid "Created on"
 msgstr "Créé le"
@@ -102,7 +102,7 @@ msgid "Description"
 msgstr "Description"
 
 #. module: project_event
-#: model:ir.model.fields,field_description:project_event.field_activity_category_type_display_name
+#: model:ir.model.fields,field_description:project_event.field_activity_category_display_name
 #: model:ir.model.fields,field_description:project_event.field_task_category_type_display_name
 msgid "Display Name"
 msgstr "Nom affiché"
@@ -129,31 +129,31 @@ msgid "Events"
 msgstr "Événements"
 
 #. module: project_event
-#: model:ir.model.fields,field_description:project_event.field_activity_category_type_id
+#: model:ir.model.fields,field_description:project_event.field_activity_category_id
 #: model:ir.model.fields,field_description:project_event.field_task_category_type_id
 msgid "ID"
 msgstr "ID"
 
 #. module: project_event
-#: model:ir.model.fields,field_description:project_event.field_activity_category_type___last_update
+#: model:ir.model.fields,field_description:project_event.field_activity_category___last_update
 #: model:ir.model.fields,field_description:project_event.field_task_category_type___last_update
 msgid "Last Modified on"
 msgstr "Dernière Modification le"
 
 #. module: project_event
-#: model:ir.model.fields,field_description:project_event.field_activity_category_type_write_uid
+#: model:ir.model.fields,field_description:project_event.field_activity_category_write_uid
 #: model:ir.model.fields,field_description:project_event.field_task_category_type_write_uid
 msgid "Last Updated by"
 msgstr "Dernière mise à jour par"
 
 #. module: project_event
-#: model:ir.model.fields,field_description:project_event.field_activity_category_type_write_date
+#: model:ir.model.fields,field_description:project_event.field_activity_category_write_date
 #: model:ir.model.fields,field_description:project_event.field_task_category_type_write_date
 msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
 
 #. module: project_event
-#: model:ir.model.fields,field_description:project_event.field_activity_category_type_name
+#: model:ir.model.fields,field_description:project_event.field_activity_category_name
 #: model:ir.model.fields,field_description:project_event.field_task_category_type_name
 msgid "Name"
 msgstr "Nom"
@@ -188,7 +188,7 @@ msgid "Responsible"
 msgstr "Responsable"
 
 #. module: project_event
-#: model:ir.model.fields,field_description:project_event.field_activity_category_type_sequence
+#: model:ir.model.fields,field_description:project_event.field_activity_category_sequence
 #: model:ir.model.fields,field_description:project_event.field_task_category_type_sequence
 msgid "Sequence"
 msgstr "Séquence"
@@ -232,11 +232,11 @@ msgid "Type"
 msgstr "Type"
 
 #. module: project_event
-#: model:ir.model,name:project_event.model_activity_category_type
-msgid "activity.category.type"
-msgstr "activity.category.type"
+#: model:ir.model,name:project_event.model_activity_category
+msgid "activity.category"
+msgstr "activity.category"
 
 #. module: project_event
 #: model:ir.model,name:project_event.model_task_category_type
-msgid "task.category.type"
-msgstr "task.category.type"
+msgid "task.category"
+msgstr "task.category"
