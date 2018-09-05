@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="integrated_by_sfl"
+              inherit_id="web.menu_secondary"
+              priority="300"
+              name="Integrated By SFL">
+      <xpath expr='//div[@class="o_sub_menu_footer"]' position="inside">
+        <br />Integrated by <a href="http://www.savoirfairelinux.com/solutions/openerp" target="_blank"><span style="color:#508CA4">Savoir-faire Linux</span></a>
+      </xpath>
+    </template>
+  </data>
+</odoo>
