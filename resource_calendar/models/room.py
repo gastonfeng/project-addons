@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright 2018 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import _, api, fields, models
+from odoo import api, fields, models
+
 
 class Room(models.Model):
     _inherit = ['resource.resource']
@@ -18,7 +19,7 @@ class Room(models.Model):
     )
     description = fields.Text(
         string='Dsescription',
-    )    
+    )
     room_type = fields.Many2one(
         string='Room Type',
         comodel_name='resource_calendar.room_type',
@@ -32,11 +33,11 @@ class Room(models.Model):
         comodel_name='resource_calendar.sector',
         ondelete='set null',
     )
-    instruments_ids = fields.Many2one(
+    instruments_ids = fields.One2many(
         'resource_calendar.instrument',
-        string='Instrument'
+        'room_id',
+        string='Instruments',
     )
-
     resource_id = fields.One2many(
         string='Resource Id',
         comodel_name='resource.resource',

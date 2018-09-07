@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <record id="action_resource_room" model="ir.actions.act_window">
         <field name="name">Rooms</field>
         <field name="res_model">resource_calendar.room</field>
@@ -55,14 +56,11 @@
                             <field name="sector" />
                             <field name="instruments_ids" />
                         </group>
-                        <group>
-                           
-
+                        <group>        
                         </group>
                     </group>
                     <notebook>
                         <page string="Tasks">
-                            
                         </page>
                         <page string="Description">
                             <field name="description"/>

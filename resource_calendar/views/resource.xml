@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <record id="action_resource_calendar" model="ir.actions.act_window">
         <field name="name">Resource Calendar</field>
         <field name="res_model">resource.resource</field>
