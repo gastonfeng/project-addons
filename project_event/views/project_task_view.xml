@@ -53,7 +53,7 @@
         <field name="name">Activity Tree</field>
         <field name="model">project.task</field>
         <field name="arch" type="xml">
-            <tree string="Activity">
+            <tree string="Activity" default_order='date_start'>
                 <field name="name"/>
                 <field name="code"/>
                 <field name="project_id" string="Event"/>

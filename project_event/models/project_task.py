@@ -8,6 +8,7 @@ from odoo import api, fields, models
 class Task(models.Model):
     _name = "project.task"
     _inherit = ['project.task']
+    _order = 'date_start asc'
 
     name = fields.Char(
         string='Title',
