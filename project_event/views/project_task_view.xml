@@ -24,6 +24,7 @@
                             <field name="responsible_id"/>
                             <field name="partner_id"/>
                             <field name="activity_category_id"/>
+                            <field name="room_id"/>
                             <field name="activity_task_type" invisible="1"/>
                         </group>
                         <group>

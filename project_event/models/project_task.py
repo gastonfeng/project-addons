@@ -68,6 +68,11 @@ class Task(models.Model):
         store=True,
         readonly=True,
     )
+    room_id = fields.Many2one(
+        string='Room',
+        comodel_name='resource_calendar.room',
+        ondelete='set null',
+    )
 
     @api.constrains('parent_id')
     def _check_subtask_project(self):
