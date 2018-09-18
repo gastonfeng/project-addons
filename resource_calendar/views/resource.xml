@@ -36,7 +36,6 @@
                   <group>
                     <field name="name"/>
                     <field name="user_id" attrs="{'required':[('resource_type','=','user')], 'invisible':[('resource_type','in',['material','room'])]}"/>
-                    <field name="room_id" attrs="{'required':[('resource_type','=','room')], 'invisible':[('resource_type','in',['material','user'])]}"/>
                     <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
                     <field name="active"/>
                    </group>

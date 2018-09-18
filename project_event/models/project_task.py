@@ -80,6 +80,16 @@ class Task(models.Model):
             if task.activity_task_type is False:
                 super(Task, task)._check_subtask_project()
 
+    @api.one
+    def request_resource_reservation(self):
+        calendar_event = self.env['calendar.event']
+        values = {
+            'start': self.date_start,
+            'stop': self.date_end, 
+            'name': self.name
+             }
+        calendar_event.create(values)
+
     @api.model
     def create(self, vals):
         if 'activity_task_type' in vals:

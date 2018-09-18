@@ -69,6 +69,9 @@
         <field name="model">project.task</field>
         <field name="arch" type="xml">
             <form string="Task">
+            <header>
+                <button class="oe_read_only" string="Request" type="object" name="request_resource_reservation"/>
+            </header>
                 <sheet>
                     <div>
                         <h1>
