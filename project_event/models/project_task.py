@@ -73,6 +73,11 @@ class Task(models.Model):
         comodel_name='resource_calendar.room',
         ondelete='set null',
     )
+    resource_type = fields.Selection([
+        ('user', 'Human'),
+        ('equipment', 'Equipment'),
+        ('room', 'Room')], string='Resource Type',
+        default='room', required=True)
 
     @api.constrains('parent_id')
     def _check_subtask_project(self):

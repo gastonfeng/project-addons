@@ -109,6 +109,9 @@
                         <page string="Description">
                             <field name="notes"/>
                         </page>
+                         <page string="Resources">
+                            <field name="resource_type"/>
+                        </page>
                     </notebook>
                 </sheet>
             </form>

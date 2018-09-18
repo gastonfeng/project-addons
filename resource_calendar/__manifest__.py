@@ -23,7 +23,6 @@
         'data/res_partner_timezone_admin.xml',
         'views/webclient_templates.xml',
         'views/room_type.xml',
-        'views/resource.xml',
         'views/sector.xml',
         'views/room.xml',
         'views/instrument.xml',
