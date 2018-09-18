@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Savoir-faire Linux
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 from odoo import fields, models
 
 
@@ -12,5 +11,3 @@ class Resource(models.Model):
         ('material', 'Material'),
         ('room', 'Room')], string='Resource Type',
         default='user', required=True)
-
-    room_id = fields.Many2one('resource_calendar.room', string='Room')

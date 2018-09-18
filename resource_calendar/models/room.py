@@ -1,18 +1,14 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Savoir-faire Linux
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 from odoo import api, fields, models
 
 
 class Room(models.Model):
     _inherit = ['resource.resource']
-    _name = 'resource_calendar.room'
+    _name = 'resource.calendar.room'
 
-    id_room = fields.Char(
+    room_code = fields.Char(
         string='Room ID',
-    )
-    name = fields.Char(
-        string='Name'
     )
     capacity = fields.Integer(
         string='Capacity',
@@ -20,30 +16,24 @@ class Room(models.Model):
     description = fields.Text(
         string='Dsescription',
     )
-    room_type = fields.Many2one(
+    room_type_id = fields.Many2one(
         string='Room Type',
-        comodel_name='resource_calendar.room_type',
+        comodel_name='resource.calendar.room.type',
         ondelete='set null',
     )
     is_bookable = fields.Boolean(
         string='Is Bookable',
     )
-    sector = fields.Many2one(
+    sector_id = fields.Many2one(
         string='Sector',
-        comodel_name='resource_calendar.sector',
+        comodel_name='resource.calendar.sector',
         ondelete='set null',
     )
     instruments_ids = fields.One2many(
-        'resource_calendar.instrument',
+        'resource.calendar.instrument',
         'room_id',
         string='Instruments',
     )
-    resource_id = fields.One2many(
-        string='Resource Id',
-        comodel_name='resource.resource',
-        inverse_name='name',
-    )
-    # TODO: Pricind field model ? field
 
     @api.model
     def create(self, values):

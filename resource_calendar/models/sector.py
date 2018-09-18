@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Savoir-faire Linux
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 from odoo import fields, models
 
 
 class Sector(models.Model):
-    _name = 'resource_calendar.sector'
+    _name = 'resource.calendar.sector'
 
     name = fields.Char(
         string='Name',

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2018 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
@@ -9,7 +8,7 @@
     'maintainer': 'Savoir-faire Linux',
     'website': 'http://www.savoirfairelinux.com',
     'license': 'LGPL-3',
-    'category': 'Others',
+    'category': 'Project',
     'summary': 'resource calendar',
     'depends': [
         'calendar_resource',
@@ -20,12 +19,12 @@
         'python': [],
     },
     'data': [
-        'data/res_partner_timezone_admin.xml',
-        'views/webclient_templates.xml',
         'views/room_type.xml',
+        'views/resource.xml',
         'views/sector.xml',
         'views/room.xml',
         'views/instrument.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'application': True,

@@ -1,21 +1,17 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Savoir-faire Linux
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 from odoo import fields, models
 
 
 class Instrument(models.Model):
     _inherit = ['resource.resource']
-    _name = 'resource_calendar.instrument'
+    _name = 'resource.calendar.instrument'
 
-    name = fields.Char(
-        string='Name',
-    )
     room_id = fields.Many2one(
-        'resource_calendar.room',
+        'resource.calendar.room',
         string='Room',)
-    resource_id = fields.One2many(
-        string='Resource Id',
+    resource_ids = fields.One2many(
+        string='Resources',
         comodel_name='resource.resource',
         inverse_name='name',
     )

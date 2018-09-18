@@ -9,6 +9,6 @@ Contributors
 
 More information
 ----------------
-* Module developed and tested with Odoo version 8.0
+* Module developed and tested with Odoo version 11.0
 * For questions, please contact our support services
 (support@savoirfairelinux.com)
