@@ -85,7 +85,7 @@ class Task(models.Model):
         calendar_event = self.env['calendar.event']
         values = {
             'start': self.date_start,
-            'stop': self.date_end, 
+            'stop': self.date_end,
             'name': self.name
              }
         calendar_event.create(values)
