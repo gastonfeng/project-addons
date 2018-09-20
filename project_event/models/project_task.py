@@ -70,7 +70,12 @@ class Task(models.Model):
     )
     room_id = fields.Many2one(
         string='Room',
-        comodel_name='resource_calendar.room',
+        comodel_name='resource.calendar.room',
+        ondelete='set null',
+    )
+    equipment_id = fields.Many2one(
+        string='Equipment',
+        comodel_name='resource.calendar.instrument',
         ondelete='set null',
     )
     resource_type = fields.Selection([
@@ -78,6 +83,20 @@ class Task(models.Model):
         ('equipment', 'Equipment'),
         ('room', 'Room')], string='Resource Type',
         default='room', required=True)
+
+    @api.onchange('room_id')
+    def _ensure_one_resource_room(self):
+        if self.room_id:
+            self.equipment_id = None
+        elif self.equipment_id:
+            self.room_id = None
+
+    @api.onchange('equipment_id')
+    def _ensure_one_resource_equipment(self):
+        if self.equipment_id:
+            self.room_id = None
+        elif self.room_id:
+            self.equipment_id = None
 
     @api.constrains('parent_id')
     def _check_subtask_project(self):
@@ -91,7 +110,10 @@ class Task(models.Model):
         values = {
             'start': self.date_start,
             'stop': self.date_end,
-            'name': self.name
+            'name': self.name,
+            'resource_type': self.resource_type,
+            'equipment_id': self.equipment_id.id if self.equipment_id else None,
+            'room_id': self.room_id.id if self.room_id else None,
              }
         calendar_event.create(values)
 
