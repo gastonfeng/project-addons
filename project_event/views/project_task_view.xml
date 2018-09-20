@@ -117,11 +117,13 @@
         <field name="model">project.task</field>
         <field name="arch" type="xml">
             <tree string="Task">
-                <field name="name"/>
                 <field name="code"/>
-                <field name="parent_id" string="Activity"/>
-                <field name="date_start"/>
-                <field name="date_end"/>
+				<field name="place"/>
+				<field name="date_start"/>
+				<field name="date_end"/>
+				<field name="status"/>
+				<field name="department_id" string="Assigned Department"/>
+				<field name="employee_ids"  widget="many2many_tags" string="Assigned To Person"/>
             </tree>
         </field>
     </record>
