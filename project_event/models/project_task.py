@@ -68,6 +68,14 @@ class Task(models.Model):
         store=True,
         readonly=True,
     )
+    place = fields.Char(
+        string='Place',
+        default="TBD",
+    )
+    status = fields.Char(
+        string='Status',
+        default="TBD",
+    )
 
     @api.constrains('parent_id')
     def _check_subtask_project(self):
