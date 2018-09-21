@@ -5,3 +5,4 @@ from . import room
 from . import room_type
 from . import sector
 from . import instrument
+from . import calendar_event

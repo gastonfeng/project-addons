@@ -20,6 +20,7 @@
     },
     'data': [
         'views/room_type.xml',
+        'views/equipment_calendar.xml',
         'views/resource.xml',
         'views/sector.xml',
         'views/room.xml',
