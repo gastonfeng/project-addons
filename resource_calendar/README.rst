@@ -1,7 +1,7 @@
-Client
+Calendar Resource for Project Management
 ======
-This module contains the dependencies, configuration and data to setup a
-database and test Client configuration.
+This module integrates Project Event module with Calendar module to 
+allow resource management through the Project event module.
 
 Contributors
 ------------

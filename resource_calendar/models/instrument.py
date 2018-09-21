@@ -9,19 +9,15 @@ class Instrument(models.Model):
 
     room_id = fields.Many2one(
         'resource.calendar.room',
-        string='Room',)
+        string='Room',
+        )
     resource_ids = fields.One2many(
         string='Resources',
         comodel_name='resource.resource',
         inverse_name='name',
     )
     sku = fields.Char(
-        string='Sku',
-    )
-    type_id = fields.Many2one(
-        string=u'type_id',
-        comodel_name='model.name',
-        ondelete='set null',
+        string='SKU',
     )
     item_type = fields.Selection([
         ('equipment', 'Equipment'),
