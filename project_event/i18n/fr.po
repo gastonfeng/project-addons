@@ -118,7 +118,6 @@ msgstr "Ajouter des tâches"
 msgid "Analytic Account"
 msgstr "Compte analytique"
 
-
 #. module: project_event
 #: model:ir.ui.view,arch_db:project_event.activity_task_template_form
 #: model:ir.ui.view,arch_db:project_event.project_event_task_form
@@ -515,7 +514,6 @@ msgstr "Demandé"
 #: model:ir.model.fields,field_description:project_event.field_project_task_reservation_event_id
 msgid "Reservation event"
 msgstr "Réservation"
-
 
 #. module: project_event
 #: model:ir.ui.view,arch_db:project_event.project_event_task_tree
