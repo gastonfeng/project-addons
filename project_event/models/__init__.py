@@ -9,3 +9,4 @@ from . import event_template
 from . import activity_template
 from . import task_template
 from . import account_analytic_account
+from . import task
