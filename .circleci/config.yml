@@ -16,7 +16,7 @@ jobs:
           name: Wait for PostgreSQL
           command: dockerize -wait tcp://localhost:5432 -timeout 5m
       - run:
-          command: git clone https://github.com/OCA/server-tools/tree/11.0/auditlog
+          command: git clone https://github.com/OCA/server-tools
       - run:
           name: Odoo install base
           command: odoo --db_host=localhost --db_user=odoo --db_password=odoo -d circleci_test --workers=0 -i base --stop-after-init
