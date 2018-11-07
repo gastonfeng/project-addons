@@ -39,6 +39,7 @@
         'views/task_template_view.xml',
         'templates/assets.xml',
         'wizard/project_event_wizard_view.xml',
+        'views/calendar_event_category_view.xml',
     ],
     'installable': True,
     'application': False,
