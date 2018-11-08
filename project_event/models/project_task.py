@@ -23,11 +23,7 @@ class Task(models.Model):
         ],
         string='Type',
     )
-    activity_category_id = fields.Many2one(
-        'activity.category',
-        string='Category',
-    )
-    task_category_id = fields.Many2one(
+    category_id = fields.Many2one(
         'task.category',
         string='Category',
     )
@@ -123,7 +119,7 @@ class Task(models.Model):
         string='Is it main Task',
         default=False,
     )
-    color = fields.Char(related='task_category_id.color')
+    color = fields.Char(related='category_id.color')
 
     def _compute_project_task_log(self):
         for rec in self:
@@ -296,15 +292,37 @@ class Task(models.Model):
 
     @api.multi
     def action_option(self):
+        self.ensure_one()
+        res = ''
         if self.activity_task_type == 'task':
-            self.draft_resources_reservation()
-            if self.task_state not in ['option', 'done']:
-                self.send_message('option')
+            if self.check_resource_booked():
+                res += self.room_id.name + '<br>' if (
+                    self.room_id) else self.equipment_id.name + '<br>'
         if self.activity_task_type == 'activity':
             for child in self.child_ids:
-                child.action_option()
-            self.send_message('option')
-        self.write({'task_state': 'option'})
+                if child.check_resource_booked():
+                    res += child.room_id.name + '<br>' if (
+                        child.room_id) else child.equipment_id.name + '<br>'
+        if res != '':
+            res = _('The Following resources are already booked:<br>') + res
+        message = _('Please Confirm your reservation.<br>') + res + _(
+            'Do you want to continue?')
+        new_wizard = self.env['reservation.validation.wiz'].create(
+            {
+                'task_id': self.id,
+                'message': message
+            }
+        )
+
+        return {
+            'name': 'Confirm reservation',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'reservation.validation.wiz',
+            'target': 'new',
+            'res_id': new_wizard.id,
+        }
 
     @api.multi
     def request_reservation(self):
@@ -473,3 +491,22 @@ class Task(models.Model):
 
     def send_message(self, action):
         self.env['mail.message'].create(self.get_message(action))
+
+    def check_resource_booked(self):
+        if self.room_id:
+            overlaps = self.env['calendar.event'].search([
+                ('room_id', '=', self.room_id.id),
+                ('start', '<', self.date_end),
+                ('stop', '>', self.date_start),
+            ])
+            if len(overlaps) > 0:
+                return True
+        if self.equipment_id:
+            overlaps_equipment = self.env['calendar.event'].search([
+                ('equipment_ids', 'in', [self.equipment_id.id]),
+                ('start', '<', self.date_end),
+                ('stop', '>', self.date_start),
+            ])
+            if len(overlaps_equipment) > 0:
+                return True
+        return False
