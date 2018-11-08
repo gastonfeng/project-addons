@@ -27,7 +27,8 @@ class MailThread(models.AbstractModel):
             new_value = getattr(self, col_name)
             if col_name == 'employee_ids':
                 new_value = ', '.join(list(map(lambda employee: employee.name, new_value)))
-                initial_value = ', '.join(list(map(lambda employee: employee.name, initial_value)))
+                initial_value = ', '.join(list(map(lambda employee: employee.name, initial_value))) \
+                    if initial_value else ' '
                 col_info['type'] = 'char'
                 col_info['string'] = _('Assigned to')
             if col_name == 'user_id':
