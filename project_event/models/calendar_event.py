@@ -11,7 +11,6 @@ class CalendarEvent(models.Model):
         'task.category',
         string='Category',
         default=lambda self: self.default_category_id(),
-
     )
 
     def default_category_id(self):
