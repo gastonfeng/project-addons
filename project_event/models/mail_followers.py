@@ -10,7 +10,7 @@ class Followers(models.Model):
 
     @api.model
     def create(self, vals):
-        if 'partner_id' in vals and 'res_id' in vals and 'res_model' in vals:
+        if vals['res_model'] == 'project.task' and 'partner_id' in vals:
             uniq_follower = self.env['mail.followers'].search(
                 [
                     ('res_id', '=', int(vals['res_id'])),
