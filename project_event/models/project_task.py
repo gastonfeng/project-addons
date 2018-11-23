@@ -295,9 +295,15 @@ class Task(models.Model):
                     'name': self.name,
                     'resource_type': self.resource_type,
                     'room_id': self.room_id.id if self.room_id else None,
+<<<<<<< HEAD
                     'equipment_ids': [(6, self.get_equipment_ids_inside(),
                                        0)] if self.room_id
                     else self.equipment_id.id,
+=======
+                    'equipment_ids': [(6, 0,
+                                       self.get_equipment_ids_inside())] if self.room_id
+                    else [(6, 0, self.equipment_id.id)],
+>>>>>>> [ADD] Added category_id and color on clone creation
                     'category_id': self.category_id.id,
                 }
             )
