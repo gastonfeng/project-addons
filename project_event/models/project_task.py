@@ -286,7 +286,26 @@ class Task(models.Model):
                 task.write({'responsible_id': self.responsible_id.id,
                            'partner_id': self.partner_id.id})
         elif self.activity_task_type == 'task':
-            return super(Task, self).write(vals)
+            self.ensure_one()
+            update_task = super(Task, self).write(vals)
+            if update_task and self.reservation_event_id:
+                reservation_event = self.env['calendar.event'].browse(
+                    self.reservation_event_id)
+                reservation_event.write(
+                    {
+                        'start': self.date_start,
+                        'stop': self.date_end,
+                        'name': self.name,
+                        'resource_type': self.resource_type,
+                        'room_id': self.room_id.id if self.room_id else None,
+                        'equipment_ids': [(4, self.equipment_id.id,
+                                           0)] if self.equipment_id else None,
+                        'event_task_id': self.id,
+                        'category_id': self.category_id.id,
+                        'color': self.color,
+                    }
+                )
+            return update_task
         else:
             return super(Task, self).write(vals)
 
@@ -406,6 +425,8 @@ class Task(models.Model):
             'state': 'open',
             'event_task_id': self.id,
             'is_task_event': True,
+            'category_id': self.category_id.id,
+            'color': self.color,
         }
         new_event = calendar_event.create(values)
         self.reservation_event_id = new_event.id
