@@ -3,7 +3,7 @@
 
 from odoo import api, fields, models, _
 from datetime import datetime
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import ValidationError
 
 
 class Task(models.Model):
@@ -283,11 +283,33 @@ class Task(models.Model):
         return super(Task, self).create(vals)
 
     @api.multi
+    def update_reservation_event(self, update_task):
+        if update_task and self.reservation_event_id:
+            self.ensure_one()
+            reservation_event = self.env['calendar.event'].browse(
+                self.reservation_event_id)
+            reservation_event.write(
+                {
+                    'start': self.date_start,
+                    'stop': self.date_end,
+                    'name': self.name,
+                    'resource_type': self.resource_type,
+                    'room_id': self.room_id.id if self.room_id else None,
+                    'equipment_ids': [(6, self.get_equipment_ids_inside(),
+                                       0)] if self.room_id
+                    else self.equipment_id.id,
+                    'category_id': self.category_id.id,
+                }
+            )
+
+    @api.multi
     def write(self, vals):
         if self.activity_task_type == 'activity':
             return self.write_activity(vals)
         else:
-            return super(Task, self).write(vals)
+            update_task = super(Task, self).write(vals)
+            self.update_reservation_event(update_task)
+            return update_task
 
     @api.multi
     def write_activity(self, vals):
@@ -380,14 +402,6 @@ class Task(models.Model):
     def request_reservation(self):
         self.ensure_one()
         calendar_event = self.env['calendar.event']
-        partners = []
-        for e in self.employee_ids:
-            if e.user_id:
-                partners.append(e.user_id.partner_id.id)
-            else:
-                raise UserError(
-                    _('Please define user account for the %s employee') % (
-                        e.name,))
         values = {
             'start': self.date_start,
             'stop': self.date_end,
@@ -395,10 +409,11 @@ class Task(models.Model):
             'resource_type': self.resource_type,
             'room_id': self.room_id.id if self.room_id else None,
             'equipment_ids': [(4, self.equipment_id.id, 0)] if self.equipment_id else None,
-            'partner_ids': [(6, 0, partners)],
             'state': 'open',
             'event_task_id': self.id,
             'is_task_event': True,
+            'category_id': self.category_id.id,
+            'color': self.color,
         }
         new_event = calendar_event.create(values)
         self.reservation_event_id = new_event.id
