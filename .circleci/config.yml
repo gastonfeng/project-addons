@@ -13,6 +13,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Clone Server Tools
+          command: git clone https://github.com/OCA/server-tools
+      - run:
           name: Wait for PostgreSQL
           command: dockerize -wait tcp://localhost:5432 -timeout 5m
 
