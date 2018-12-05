@@ -283,42 +283,45 @@ class Task(models.Model):
         return super(Task, self).create(vals)
 
     @api.multi
-    def update_reservation_event(self, update_task):
-        if update_task and self.reservation_event_id:
-            self.ensure_one()
+    def get_partners(self):
+        partners = []
+        for e in self.employee_ids:
+            if e.user_id:
+                partners.append(e.user_id.partner_id.id)
+        return partners
+
+    @api.multi
+    def update_reservation_event(self, vals):
+        self.ensure_one()
+        if self.reservation_event_id:
             reservation_event = self.env['calendar.event'].browse(
                 self.reservation_event_id)
-            partners = []
-            for e in self.employee_ids:
-                if e.user_id:
-                    partners.append(e.user_id.partner_id.id)
-                else:
-                    raise UserError(
-                        _('Please define user account for the %s employee') % (
-                            e.name,))
-            reservation_event.write(
-                {
-                    'start': self.date_start,
-                    'stop': self.date_end,
-                    'name': self.name,
-                    'resource_type': self.resource_type,
-                    'room_id': self.room_id.id if self.room_id else None,
-                    'equipment_ids': [(6, 0,
-                                       self.get_equipment_ids_inside())] if self.room_id
-                    else [(6, 0, self.equipment_id.id)],
-                    'partner_ids': [(6, 0, partners)],
-                    'category_id': self.category_id.id,
-                }
-            )
+            update_vals = {}
+            update_vals.update(vals)
+            if 'date_start' in vals:
+                update_vals['start'] = update_vals.pop('date_start')
+            if 'date_end' in vals:
+                update_vals['stop'] = update_vals.pop('date_end')
+            if 'equipment_id' in vals and vals['equipment_id'] is not False:
+                update_vals['equipment_ids'] = \
+                    [[6, False, [update_vals.pop('equipment_id')]]]
+            elif 'room_id' in vals:
+                update_vals['equipment_ids'] = \
+                    [[6, False, self.env['resource.calendar.room']
+                        .browse(vals['room_id']).instruments_ids.ids]]
+                update_vals.pop('equipment_id')
+            if 'employee_ids' in vals:
+                update_vals['partner_ids'] = [[6, False, self.get_partners()]]
+                update_vals.pop('employee_ids')
+            reservation_event.write(update_vals)
 
     @api.multi
     def write(self, vals):
         if self.activity_task_type == 'activity':
             return self.write_activity(vals)
         else:
-            update_task = super(Task, self).write(vals)
-            self.update_reservation_event(update_task)
-            return update_task
+            self.update_reservation_event(vals)
+            return super(Task, self).write(vals)
 
     @api.multi
     def write_activity(self, vals):
@@ -411,14 +414,6 @@ class Task(models.Model):
     def request_reservation(self):
         self.ensure_one()
         calendar_event = self.env['calendar.event']
-        partners = []
-        for e in self.employee_ids:
-            if e.user_id:
-                partners.append(e.user_id.partner_id.id)
-            else:
-                raise UserError(
-                    _('Please define user account for the %s employee') % (
-                        e.name,))
         values = {
             'start': self.date_start,
             'stop': self.date_end,
@@ -426,7 +421,7 @@ class Task(models.Model):
             'resource_type': self.resource_type,
             'room_id': self.room_id.id if self.room_id else None,
             'equipment_ids': [(4, self.equipment_id.id, 0)] if self.equipment_id else None,
-            'partner_ids': [(6, 0, partners)],
+            'partner_ids': [(6, 0, self.get_partners())],
             'state': 'open',
             'event_task_id': self.id,
             'is_task_event': True,
