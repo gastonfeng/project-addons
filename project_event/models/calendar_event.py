@@ -12,5 +12,10 @@ class CalendarEvent(models.Model):
         string='Category',
         default=lambda self: self.env['task.category'].search([('is_default', '=', True)])
     )
+    sector_id = fields.Many2one(
+        'res.partner.sector',
+        string='Faculty Sectors',
+        track_visibility='onchange',
+    )
 
     color = fields.Char(related='category_id.color')

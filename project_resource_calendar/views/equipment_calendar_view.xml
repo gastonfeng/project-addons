@@ -39,6 +39,14 @@
                            class="oe_inline"
                            invisible="1" attrs="{'readonly': [('is_task_event','=',True)]}"/>
                 </h2>
+
+                <label for="sector_id" class="oe_edit_only"/>
+                <h2>
+                <field name="sector_id"
+                       placeholder="Faculty Sectors"
+                       class="oe_inline" attrs="{'readonly': [('is_task_event','=',True)]}"/>
+                </h2>
+
                 <label for="room_id" class="oe_edit_only"/>
                 <h2>
                     <field name="room_id"
@@ -89,6 +97,7 @@
             </xpath>
             <field name="partner_ids" position="after">
                 <field name="resource_type" attrs="{'readonly': [('is_task_event','=',True)]}"/>
+                <field name="sector_id" attrs="{'readonly': [('is_task_event','=',True)]}"/>
                 <field name="room_id"
                        attrs="{'required':[('resource_type','=','room')], 'readonly': [('is_task_event','=',True)]}"/>
                 <field name="equipment_ids"
