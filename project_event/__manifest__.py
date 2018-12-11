@@ -40,7 +40,6 @@
         'views/res_partner_category_type_view.xml',
         'views/res_partner_category_view.xml',
         'views/project_task_view.xml',
-        'views/res_partner_sector_view.xml',
         'templates/assets.xml',
         'wizard/project_event_wizard_view.xml',
         'views/calendar_event_category_view.xml',

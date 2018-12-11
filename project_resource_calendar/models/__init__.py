@@ -6,3 +6,5 @@ from . import room_type
 from . import instrument
 from . import calendar_event
 from . import miscellaneous
+from . import res_partner_sector
+from . import res_partner

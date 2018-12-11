@@ -49,6 +49,10 @@ class CalendarEvent(models.Model):
         string='Is Created From Task',
         default=False,
     )
+    sector_id = fields.Many2one(
+        'res.partner.sector',
+        string='Faculty Sectors',
+    )
 
     @api.one
     @api.depends('start_datetime')
