@@ -206,6 +206,25 @@ class Task(models.Model):
         string='Is Created From Template',
         default=False,
     )
+    pricing = fields.Char(
+        string='Pricing',
+        compute='_compute_pricing',
+        store=True,
+        )
+
+    @api.depends('room_id','equipment_id')
+    def _compute_pricing(self):
+        for rec in self:
+            if rec.room_id:    
+                rec.pricing = str(rec.room_id.pricing) \
+                              + " / " \
+                              + rec.pricing_type
+            elif rec.equipment_id:
+                rec.pricing = str(rec.equipment_id.pricing) \
+                              + " / " \
+                              + rec.pricing_type
+            else:
+                rec.pricing = '0'
 
     @api.depends('name', 'code')
     def _compute_complete_name(self):
