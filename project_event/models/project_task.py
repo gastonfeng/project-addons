@@ -216,8 +216,9 @@ class Task(models.Model):
                 task.complete_name = task.name
 
     def _compute_project_task_log(self):
+        data_auditlog = self.get_model_Info('auditlog.log')
         for rec in self:
-            rec.project_task_log = self.env['auditlog.log'].search_count([
+            rec.project_task_log = data_auditlog.search_count([
                 ('model_id', '=', self.env.ref(
                     'project.model_project_task').id),
                 ('res_id', '=', rec.id)
@@ -421,7 +422,8 @@ class Task(models.Model):
     def update_reservation_event(self, vals):
         self.ensure_one()
         if self.reservation_event_id:
-            reservation_event = self.env['calendar.event'].browse(
+            data_calendar_event = self.get_model_Info('calendar.event')
+            reservation_event = data_calendar_event.browse(
                 self.reservation_event_id)
             field_names = [
                 'date_start', 'date_end', 'equipment_id',
@@ -460,10 +462,11 @@ class Task(models.Model):
         return set_value
 
     def update_value_room_id(self, vals):
+        resource_calendar_room = self.get_model_Info('resource.calendar.room')
         set_value = {}
         set_value['equipment_ids'] = \
-            [(6, 0, self.env['resource.calendar.room']
-              .browse(vals['room_id']).instruments_ids.ids)]
+            [(6, 0, resource_calendar_room.
+              browse(vals['room_id']).instruments_ids.ids)]
         return set_value
 
     def update_value_employee_ids(self, vals):
@@ -599,37 +602,32 @@ class Task(models.Model):
     def cancel_resources_reservation(self):
         self.ensure_one()
         if self.reservation_event_id:
-            reservation_event = self.env['calendar.event'].browse(
-                self.reservation_event_id)
-        reservation_event.write(
-            {
-                'state': 'cancelled'
-            }
-        )
+            reserve_event = self.info_calendar_event()
+            reserve_event.write(
+                {'state': 'cancelled'}
+            )
 
     @api.multi
     def draft_resources_reservation(self):
         self.ensure_one()
         if not self.reservation_event_id:
             self.request_reservation()
-        reservation_event = self.env['calendar.event'].browse(
-            self.reservation_event_id)
-        reservation_event.write(
-            {
-                'state': 'draft'
-            }
-        )
+            reserve_event = self.info_calendar_event()
+            reserve_event.write(
+                {'state': 'draft'}
+            )
 
     @api.multi
     def open_resources_reservation(self):
         self.ensure_one()
-        reservation_event = self.env['calendar.event'].browse(
-            self.reservation_event_id)
-        reservation_event.write(
-            {
-                'state': 'open'
-            }
+        reserve_event = self.info_calendar_event()
+        reserve_event.write(
+            {'state': 'open'}
         )
+
+    def info_calendar_event(self):
+        return self.env['calendar.event'].browse(
+            self.reservation_event_id)
 
     @api.multi
     def do_reservation(self):
@@ -789,8 +787,8 @@ class Task(models.Model):
             ])
             overlaps_ids = overlaps.ids
             for calendar_event in overlaps_ids:
-                if self.env['calendar.event']\
-                    .browse(calendar_event).event_task_id.id == self.id:
+                if self.env['calendar.event'] \
+                        .browse(calendar_event).event_task_id.id == self.id:
                     overlaps_ids.remove(calendar_event)
             if len(overlaps_ids) > 0:
                 return True
@@ -840,3 +838,15 @@ class Task(models.Model):
             'target': 'new',
             'res_id': new_wizard.id,
         }
+
+    def get_model_Info(self, model_name):
+        if model_name == 'reservation.validation.wiz':
+            return self.env['reservation.validation.wiz']
+        if model_name == 'calendar.event':
+            return self.env['calendar.event']
+        if model_name == 'hr.employee':
+            return self.env['hr.employee']
+        if model_name == 'resource.calendar.room':
+            return self.env['resource.calendar.room']
+        if model_name == 'auditlog.log':
+            return self.env['auditlog.log']
