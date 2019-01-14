@@ -290,32 +290,20 @@ class Task(models.Model):
     def verify_room_bookable(self):
         if self.room_id:
             if not self.room_id.is_bookable:
-                raise ValidationError(self.get_error_type('TYPE_ERROR_RESOURCE'))
-                # raise ValidationError(
-                #     _(
-                #         'This room is not bookable'
-                #     )
-                # )
+                raise ValidationError(
+                    _(
+                        'This room is not bookable'
+                    )
+                )
 
     def verify_equipment_bookable(self):
         if self.equipment_id:
             if not self.equipment_id.is_bookable:
-                raise ValidationError(self.get_error_type('TYPE_ERROR_ROOM'))
-                # raise ValidationError(
-                #     _(
-                #         'This resource is not bookable'
-                #     )
-                # )
-
-    def get_error_type(self, type_error):
-        error_msg = ""
-        if type_error == 'RESOURCE_TYPE_ERROR':
-            error_msg = _('This resource is not bookable')
-        if type_error == 'ROOM_TYPE_ERROR':
-            error_msg = _('This room is not bookable')
-        if type_error == 'CLIENT_TYPE_ERROR':
-            error_msg = _('There must be a responsible or a client')
-        return error_msg
+                raise ValidationError(
+                    _(
+                        'This resource is not bookable'
+                    )
+                )
 
     @api.constrains('parent_id')
     def _check_subtask_project(self):
