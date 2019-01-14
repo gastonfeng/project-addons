@@ -291,21 +291,11 @@ class Task(models.Model):
         if self.room_id:
             if not self.room_id.is_bookable:
                 raise ValidationError(self.get_error_type('TYPE_ERROR_RESOURCE'))
-                # raise ValidationError(
-                #     _(
-                #         'This room is not bookable'
-                #     )
-                # )
 
     def verify_equipment_bookable(self):
         if self.equipment_id:
             if not self.equipment_id.is_bookable:
                 raise ValidationError(self.get_error_type('TYPE_ERROR_ROOM'))
-                # raise ValidationError(
-                #     _(
-                #         'This resource is not bookable'
-                #     )
-                # )
 
     def get_error_type(self, type_error):
         error_msg = ""
@@ -768,11 +758,7 @@ class Task(models.Model):
             if self.partner_id:
                 responsible = self.partner_id
             else:
-                raise ValidationError(
-                    _(
-                        'There must be a responsible or a client ',
-                    )
-                )
+                raise ValidationError(self.get_error_type('CLIENT_TYPE_ERROR'))
         return {
             'body': self.get_message_body(action) + message,
             'channel_ids': [(6, 0, [self.env.ref
