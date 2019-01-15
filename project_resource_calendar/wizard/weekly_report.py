@@ -50,9 +50,14 @@ class ReportWeekly(models.AbstractModel):
             ('room_id', '=', room.id),
             ('recurrency', '=', data['form']['recurrency']),
             ('state', '=', data['form']['state']),
-            ], order='start asc')
-    
+        ], order='start asc')
+
     def get_docs(self, room, data, date_start, date_end):
         events_filtered = self.get_events_given_room(room, data)
         events = self.get_events_on_period(date_start, date_end, events_filtered)
+        self.review_weekdays(events)
         return self.format_event_to_docs(events, [])
+
+    def review_weekdays(self, events):
+        for event in events:
+            event._get_weekday()
